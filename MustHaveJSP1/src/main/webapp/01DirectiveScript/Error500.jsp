@@ -9,8 +9,7 @@
 <body>
 <%
 	int myAge = Integer.parseInt(request.getParameter("age")) + 10;
-	out.println("10년 후 당신의 나이는 "  + myAge +"입니다.");
-	
+	out.println("10년 후 당신의 나이는 "  + myAge +"입니다.");	
 %>
 </body>
 </html>
