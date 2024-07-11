@@ -69,8 +69,19 @@ insert into board values (seq_board_num.nextval, '지금은 가을입니다', '�
 insert into board values (seq_board_num.nextval, '지금은 겨울입니다', '겨울연가', 'musthave', sysdate, 0);
 commit;
 
-
+SELECT COUNT(*) FROM board;
+SELECT * FROM board  ORDER BY num DESC;
 
 select * from member;
-
+select * from board;
 select id, pass, rownum from member;
+
+select * from board order by num desc;
+
+select Tb.*, rownum rNum
+    from (select * from board order by num desc) Tb;
+    
+select *
+    from (select Tb.*, rownum rNum
+            from (select * from board order by num desc) Tb)
+            where rNum between 1 and 10;

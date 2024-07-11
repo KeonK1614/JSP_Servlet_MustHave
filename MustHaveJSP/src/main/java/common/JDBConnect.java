@@ -35,6 +35,7 @@ public class JDBConnect {
 	public JDBConnect(String driver, String url, String id, String pwd) {
 		try {
 			Class.forName(driver);
+			
 			con = DriverManager.getConnection(url,id,pwd);
 			System.out.println("DB 연결 성공(인수생성자1)");//디버그 확인용 - 주석처리
 		}
@@ -46,6 +47,7 @@ public class JDBConnect {
 	public JDBConnect(ServletContext application) {
 		try {
 			String driver = application.getInitParameter("OracleDriver");
+			Class.forName(driver);
 			String url = application.getInitParameter("OracleURL");
 			String id = application.getInitParameter("OracleId");
 			String pwd = application.getInitParameter("OraclePwd");
