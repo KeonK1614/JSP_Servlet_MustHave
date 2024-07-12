@@ -3,6 +3,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="model1.board.BoardDAO"%>
+<%@ page import="utils.BoardPage" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%
@@ -28,19 +29,29 @@ if (searchWord != null) {
 }
 // Map콜렉션을 인수로 게시물의 갯수를 카운트한다.
 int totalCount = dao.selectCount(param);
-// 목록에 출력할 게시물을 추출하여 반환받는다.
-List<BoardDTO> boardLists = dao.selectList(param);
-//자원해제
-dao.close(); 
-
 
 int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
 int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
 int totalPage = (int)Math.ceil((double)totalCount / pageSize);
 
 int pageNum=1;
-String pa
+String pageTemp = request.getParameter("pageNum");
+
+if (pageTemp != null && !pageTemp.equals(""))
+	pageNum = Integer.parseInt(pageTemp);
+
+int start = (pageNum -1) * pageSize + 1;
+int end = pageNum * pageSize;
+param.put("start", start);
+param.put("end", end);
+// 페이지 처리 end*
+
+// 목록에 출력할 게시물을 추출하여 반환받는다.
+List<BoardDTO> boardLists = dao.selectListPage(param);
+//자원해제
+dao.close(); 
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +61,7 @@ String pa
 <body>
     <jsp:include page="../Common/Link.jsp" />  
 
-    <h2>목록 보기(List)</h2>
+    <h2>목록 보기(List) - 현재 페이지 : <%= pageNum %> (전체 : <%= totalPage %>)</h2>
     <form method="get">  
     <table border="1" width="90%">
     <tr>
@@ -85,9 +96,11 @@ if (boardLists.isEmpty()) {
 }
 else {
     int virtualNum = 0; 
+    int countNum = 0;
     for (BoardDTO dto : boardLists)
     {
-        virtualNum = totalCount--;   
+        //virtualNum = totalCount--;  
+        virtualNum = totalCount - (((pageNum -1) * pageSize) + countNum++);
 %>
         <tr align="center">
             <td><%= virtualNum %></td>  
@@ -105,7 +118,12 @@ else {
     </table>
    
     <table border="1" width="90%">
-        <tr align="right">
+        <tr align="center">
+        	<td>
+        		<%= BoardPage.pagingStr(totalCount, pageSize, blockPage,
+        				pageNum, request.getRequestURI()) %>
+        	</td>
+        	<!-- 글쓰기 버튼 -->
             <td><button type="button" onclick="location.href='Write.jsp';">글쓰기
                 </button></td>
         </tr>

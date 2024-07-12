@@ -44,7 +44,8 @@
     <filter-name>SetCharEncoding</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-              <context-param>
+  
+    <context-param>
 		<param-name>POSTS_PER_PAGE</param-name>
 		<param-value>10</param-value>
 	</context-param>

@@ -11,14 +11,6 @@ dao.updateVisitCount(num);
 BoardDTO dto = dao.selectView(num);
 dao.close();
 
-int totalCount = dao.selectCount(param);
-
-int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-int totalPage = (int)Math.ceil((double)totalCount / pageSize);
-
-int pageNum=1;
-String pa
 %>
 <!DOCTYPE html>
 <html>
