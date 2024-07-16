@@ -85,3 +85,6 @@ select *
     from (select Tb.*, rownum rNum
             from (select * from board order by num desc) Tb)
             where rNum between 1 and 10;
+            
+            
+----------- JSP 13장 파일 업로드
