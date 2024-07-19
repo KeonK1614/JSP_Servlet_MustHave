@@ -88,3 +88,58 @@ select *
             
             
 ----------- JSP 13장 파일 업로드
+
+create table myfile (
+    idx number primary key,
+
+    title varchar2(200) not null,
+    cate varchar2(100),
+    ofile varchar2(100) not null,
+    sfile varchar2(30) not null,
+    postdate date default sysdate not null
+);
+
+desc myfile;
+
+delete * from myfile;--초기화 및 안에 있는 데이터 지우기
+select * from myfile;--확인하기
+
+drop table mvcboard;
+
+create table mvcboard (
+	idx number primary key, 
+	name varchar2(50) not null, 
+	title varchar2(200) not null, 
+	content varchar2(2000) not null, 
+	postdate date default sysdate not null, 
+	ofile varchar2(200), 
+	sfile varchar2(30), 
+	downcount number(5) default 0 not null, --다운로드 한 횟수 카운트
+	pass varchar2(50) not null, 
+	visitcount number default 0 not null
+);
+
+desc mvcboard;
+
+insert into mvcboard (idx, name, title, content, pass)
+    values (seq_board_num.nextval, '김유신', '자료실 제목1 입니다.','내용','1234');
+insert into mvcboard (idx, name, title, content, pass)
+    values (seq_board_num.nextval, '장보고', '자료실 제목2 입니다.','내용','1234');
+insert into mvcboard (idx, name, title, content, pass)
+    values (seq_board_num.nextval, '이순신', '자료실 제목3 입니다.','내용','1234');
+insert into mvcboard (idx, name, title, content, pass)
+    values (seq_board_num.nextval, '강감찬', '자료실 제목4 입니다.','내용','1234');
+insert into mvcboard (idx, name, title, content, pass)
+    values (seq_board_num.nextval, '대조영', '자료실 제목5 입니다.','내용','1234');
+
+commit;
+
+select * from mvcboard;
+
+select dbtimezone from dual;
+
+select sessiontimezone from dual;
+
+select sysdate from dual;
+
+select CURRENT_TIMESTAMP AT TIME ZONE "Asia/Seoul' AS seoul_time from dual;
